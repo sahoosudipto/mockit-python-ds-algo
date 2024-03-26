@@ -27,10 +27,9 @@ recentCounter.ping(3002);  // requests = [1, 100, 3001, 3002], range is [2,3002]
 class RecentCounter(object):
 
     def __init__(self):
-            # self.requests = []
-            # initiated = True
-        self.queue = collections.deque()
-        self.oldest_time = 0
+           self.queue = []
+        #  self.queue = collections.deque()
+        #  self.oldest_time = 0
         
 
     def ping(self, t):
@@ -39,13 +38,6 @@ class RecentCounter(object):
         :rtype: int
         """
         self.queue.append(t)
-        while self.queue and self.queue[0] < t - 3000:
-            self.queue.popleft()
-        self.oldest_time = self.queue[0] 
+        while t - self.queue[0] > 3000:
+            self.queue.pop(0)
         return len(self.queue)
-        
-
-
-# Your RecentCounter object will be instantiated and called as such:
-# obj = RecentCounter()
-# param_1 = obj.ping(t)
